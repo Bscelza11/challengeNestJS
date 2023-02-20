@@ -13,34 +13,35 @@ import { DogService } from 'src/dog/services/dog/dog.service';
 export class DogController {
   constructor(private dogService: DogService) {}
 
-  /*@Get()
+  @Get('/:dogId')
   find(@Param('dogId') dogId: number) {
-    this.dogService.find(dogId);
-  }*/
+    return this.dogService.find(dogId);
+  }
   @Get('/findOne?age=&race=')
   findOne(@Query('age') age: number, @Query('race') race: string) {
-    this.dogService.findOne(age, race);
+    return this.dogService.findOne(age, race);
   }
 
   @Get()
   findAll() {
-    this.dogService.findAll();
+    return this.dogService.findAll();
   }
+
   @Post()
   create(
     @Body('race') race: string,
     @Body('age') age: number,
     @Body('color') color: string,
   ) {
-    this.dogService.create(age, race, color);
+    return this.dogService.create(age, race, color);
   }
 
   @Patch('/:dogId')
-  update(@Param('dogId') dogId: number) {
-    this.dogService.update(dogId);
+  update(@Param('dogId') dogId: number, @Body('age') age: number) {
+    return this.dogService.update(dogId, age);
   }
   @Delete('/:dogId')
   delete(@Param('dogId') dogId: number) {
-    this.dogService.delete(dogId);
+    return this.dogService.delete(dogId);
   }
 }
