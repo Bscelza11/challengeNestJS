@@ -3,51 +3,37 @@ import { DOGS } from 'src/dog/datasource/dogs';
 
 @Injectable()
 export class DogService {
+  DOGS: (
+    | { id: number; race: string; age: number; color: string }
+    | { dogId: number; age: number }
+  )[];
   find(dogId: number) {
-    let d: any;
-    DOGS.forEach((dog) => {
-      if (dog.id == dogId) {
-        d = dog;
-      }
-    });
-    return d;
+    return DOGS.find((dog) => dog.id == dogId);
   }
   findOne(age: number, race: string) {
-    let d: any;
-    DOGS.forEach((dog) => {
-      if (dog.age == age && dog.race == race) {
-        d = dog;
-      }
-    });
-    return d;
+    return DOGS.find((dog) => dog.age == age && dog.race == race);
   }
   findAll() {
     return DOGS;
   }
   create(age: number, race: string, color: string) {
-    const id = DOGS.reduce((maxId, dog) => Math.max(maxId, dog.id), 0) + 1;
+    const id = DOGS.length + 1;
     const dogAdd = { id: id, age: age, race: race, color: color };
     DOGS.push(dogAdd);
     return dogAdd;
   }
   update(dogId: number, age: number) {
-    let d: any;
-    DOGS.forEach((dog) => {
-      if (dog.id == dogId) {
-        dog.age = age;
-        d = dog;
-      }
-    });
-    return d;
+    const newDog = { dogId, age };
+    DOGS.map((dog) => (dog.id == dogId ? newDog : dog));
+    return newDog;
   }
   delete(dogId: number) {
-    const d = DOGS.findIndex((dog) => dog.id === Number(dogId));
-    if (d !== -1) {
-      DOGS.splice(d, 1)[0];
+    const dogDelete = DOGS.findIndex((dog) => dog.id == dogId);
+    console.log(dogDelete);
+    if (dogDelete !== -1) {
+      DOGS.splice(dogDelete, 1)[0];
       console.log(DOGS);
       return 'Dog deleted succesfully';
-    } else {
-      return 'Sorry';
     }
   }
 }
