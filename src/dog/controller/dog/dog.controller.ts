@@ -13,13 +13,13 @@ import { DogService } from 'src/dog/services/dog/dog.service';
 export class DogController {
   constructor(private dogService: DogService) {}
 
+  @Get('/findOne')
+  findOne(@Query('age') age: number, @Query('race') race: string) {
+    return this.dogService.findOne(age, race);
+  }
   @Get('/:dogId')
   find(@Param('dogId') dogId: number) {
     return this.dogService.find(dogId);
-  }
-  @Get('/findOne?age=&race=')
-  findOne(@Query('age') age: number, @Query('race') race: string) {
-    return this.dogService.findOne(age, race);
   }
 
   @Get()
