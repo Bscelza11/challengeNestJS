@@ -19,9 +19,12 @@ export class DogService {
     return dogAdd;
   }
   update(dogId: number, age: number) {
-    const newDog = { dogId, age };
-    DOGS.map((dog) => (dog.id == dogId ? newDog : dog));
-    return newDog;
+    const dogIndex = DOGS.findIndex((dog) => dog.id == dogId);
+    if (dogIndex > -1) {
+      const updateDog = { ...DOGS[dogIndex], age };
+      DOGS[dogIndex] = updateDog;
+      return updateDog;
+    }
   }
   delete(dogId: number) {
     const dogDelete = DOGS.findIndex((dog) => dog.id == dogId);
