@@ -1,4 +1,4 @@
-import { Dog } from './dog.entity';
+import { Dog } from './dog.entities';
 
 const entities = [Dog];
 

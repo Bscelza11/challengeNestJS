@@ -7,8 +7,7 @@ import {
   Query,
   UsePipes,
 } from '@nestjs/common/decorators';
-import { CreateDogDto } from 'src/dog/dto/create-dog.dto';
-import { UpdateDogDto } from 'src/dog/dto/update-dog.dto';
+import { CreateDogDto, UpdateDogDto } from 'src/dog/dto/dog.dto';
 import { DogService } from 'src/dog/services/dog/dog.service';
 @Controller('dog')
 export class DogController {

@@ -11,7 +11,7 @@ export class Dog {
     nullable: false,
     default: '',
   })
-  breed: string;
+  race: string;
 
   @Column({
     nullable: false,
