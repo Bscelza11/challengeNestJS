@@ -1,14 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Patch, ValidationPipe } from '@nestjs/common';
 import {
   Body,
   Delete,
   Param,
-  Patch,
   Post,
   Query,
+  UsePipes,
 } from '@nestjs/common/decorators';
+import { CreateDogDto } from 'src/dog/dto/create-dog.dto';
+import { UpdateDogDto } from 'src/dog/dto/update-dog.dto';
 import { DogService } from 'src/dog/services/dog/dog.service';
-
 @Controller('dog')
 export class DogController {
   constructor(private dogService: DogService) {}
@@ -21,26 +22,22 @@ export class DogController {
   find(@Param('dogId') dogId: number) {
     return this.dogService.find(dogId);
   }
-
   @Get()
   findAll() {
     return this.dogService.findAll();
   }
 
   @Post()
-  create(
-    @Body('race') race: string,
-    @Body('age') age: number,
-    @Body('color') color: string,
-  ) {
-    return this.dogService.create(age, race, color);
+  @UsePipes(ValidationPipe)
+  create(@Body() createDogDto: CreateDogDto) {
+    return this.dogService.create(createDogDto);
   }
-
-  @Patch('/:dogId')
-  update(@Param('dogId') dogId: number, @Body('age') age: number) {
-    return this.dogService.update(dogId, age);
+  @Patch(':dogId')
+  @UsePipes(ValidationPipe)
+  update(@Body() updateDogDto: UpdateDogDto, @Param('dogId') dogId: number) {
+    return this.dogService.update(updateDogDto, dogId);
   }
-  @Delete('/:dogId')
+  @Delete(':dogId')
   delete(@Param('dogId') dogId: number) {
     return this.dogService.delete(dogId);
   }

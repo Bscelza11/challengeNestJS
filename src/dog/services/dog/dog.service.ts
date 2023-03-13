@@ -1,23 +1,45 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MoreThanOrEqual, Repository } from 'typeorm';
+import { CreateDogDto } from 'src/dog/dto/create-dog.dto';
+import { UpdateDogDto } from 'src/dog/dto/update-dog.dto';
+import { Dog } from 'src/entities';
 
 @Injectable()
 export class DogService {
+  constructor(
+    @InjectRepository(Dog) private readonly dogRepository: Repository<Dog>,
+  ) {}
   find(dogId: number) {
-    return `find is working, and the dogId parameter is ${dogId}`;
+    console.log(dogId);
+    return this.dogRepository.findOneBy({
+      id: dogId,
+    });
   }
   findOne(age: number, race: string) {
-    return `findOne function with params age: ${age} & race: ${race}`;
+    return this.dogRepository.findOne({
+      where: {
+        age: age,
+        race: race,
+      },
+    });
   }
   findAll() {
-    return 'findAll function getting all dogs';
+    return this.dogRepository.find();
   }
-  create(age: number, race: string, color: string) {
-    return `create function with properties, race: ${race}, age: ${age} & color: ${color}`;
+  create(createDogDto: CreateDogDto) {
+    const newDog = this.dogRepository.create(createDogDto);
+    return this.dogRepository.save(newDog);
   }
-  update(dogId: number, age: number) {
-    return `update function dog with id: ${dogId} & property, age: ${age}`;
+
+  update(updateDogDto: UpdateDogDto, idDog: number) {
+    return this.dogRepository.save({
+      id: idDog,
+      ...updateDogDto,
+    });
   }
-  delete(dogId: number) {
-    return `delete function dog with id: ${dogId}`;
+
+  delete(idDog: number) {
+    return this.dogRepository.delete({ id: idDog });
   }
 }
