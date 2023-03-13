@@ -3,10 +3,6 @@ import { DOGS } from 'src/dog/datasource/dogs';
 
 @Injectable()
 export class DogService {
-  DOGS: (
-    | { id: number; race: string; age: number; color: string }
-    | { dogId: number; age: number }
-  )[];
   find(dogId: number) {
     return DOGS.find((dog) => dog.id == dogId);
   }
