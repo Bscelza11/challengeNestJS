@@ -27,7 +27,7 @@ export class DogService {
     const dogDelete = DOGS.findIndex((dog) => dog.id == dogId);
     console.log(dogDelete);
     if (dogDelete !== -1) {
-      DOGS.splice(dogDelete, 1)[0];
+      DOGS.splice(dogDelete, 1);
       console.log(DOGS);
       return 'Dog deleted succesfully';
     }
