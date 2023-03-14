@@ -10,7 +10,7 @@ import {
 import { CreateDogDto, UpdateDogDto } from 'src/dog/dto/dog.dto';
 import { DogService } from 'src/dog/services/dog/dog.service';
 import { DogDto } from 'src/dog/dto/dog.dto';
-import { ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOkResponse, ApiBody } from '@nestjs/swagger';
 
 @ApiTags('Dog')
 @Controller('dog')
@@ -47,6 +47,7 @@ export class DogController {
 
   @Post()
   @UsePipes(ValidationPipe)
+  @ApiBody({ description: 'The body of the request', type: CreateDogDto })
   @ApiOkResponse({
     description: 'Create new dog',
     type: CreateDogDto,
@@ -57,6 +58,7 @@ export class DogController {
   }
   @Patch(':dogId')
   @UsePipes(ValidationPipe)
+  @ApiBody({ description: 'The age of the dog', type: UpdateDogDto })
   @ApiOkResponse({
     description: 'Update a dog',
     type: UpdateDogDto,
